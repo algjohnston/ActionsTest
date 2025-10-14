@@ -1,0 +1,50 @@
+name: build_and_test
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+    
+env:
+    DOTNETVERSION: 8.0.x
+    MAJORVERSION: 1.0.0
+
+jobs:
+  buildLibrary:
+    runs-on: macOS-latest
+    outputs:
+      output1: ${{ steps.versionstep.outputs.versionnumber }}
+    
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-dotnet@v5
+        with:
+            dotnet-version: ${{env.DOTNETVERSION}}
+
+      - name: Install .NET MAUI
+        shell: bash
+        run: |
+          dotnet workload install maui
+      
+      - name: Set VERSION variable from tag
+        id: versionstep
+        run: |
+          echo "VERSION=$MAJORVERSION-$GITHUB_RUN_ID" >> $GITHUB_ENV
+          echo "versionnumber=$MAJORVERSION-$GITHUB_RUN_ID" >> $GITHUB_OUTPUT
+    
+      - name: Restore nuget packages
+        run: |
+          dotnet restore App/App.csproj
+          dotnet restore TestApp/TestApp.csproj
+
+      - name: Build Library
+        run: |
+          dotnet build App/App.csproj -c Release
+
+      - name: Run Unit Tests
+        run: |
+          dotnet test TestApp/TestApp.csproj --no-build --configuration Release
+
