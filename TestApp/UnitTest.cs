@@ -13,6 +13,6 @@ public class UnitTest1
     public void FailingTest()
     {
         App app = new();
-        Assert.Equal(3, app.add(1, 2));
+        Assert.Equal(4, app.add(1, 2));
     }
 }
