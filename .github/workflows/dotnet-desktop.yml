@@ -8,7 +8,7 @@ on:
     branches: [ main ]
     
 env:
-    DOTNETVERSION: 8.0.x
+    DOTNETVERSION: 9.0.x
     MAJORVERSION: 1.0.0
 
 jobs:
