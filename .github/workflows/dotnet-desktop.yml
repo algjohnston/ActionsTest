@@ -10,7 +10,7 @@ env:
 
 jobs:
   buildLibrary:
-    runs-on: macOS-latest
+    runs-on: macOS-26
     outputs:
       output1: ${{ steps.versionstep.outputs.versionnumber }}
     
@@ -20,6 +20,20 @@ jobs:
       - uses: actions/setup-dotnet@v5
         with:
             dotnet-version: ${{env.DOTNETVERSION}}
+
+      - uses: actions/cache@v3
+        with:
+          path: ~/.nuget/packages
+          key: nuget-${{ runner.os }}-${{ hashFiles('**/App/*.csproj') }}
+          restore-keys: |
+            nuget-${{ runner.os }}-
+
+      - uses: actions/cache@v3
+        with:
+          path: ~/.dotnet/workload-manifests
+          key: maui-${{ runner.os }}-${{ hashFiles('**/*.xml') }}
+          restore-keys: |
+            maui-${{ runner.os }}-
 
       - name: Install .NET MAUI
         shell: bash
@@ -35,9 +49,11 @@ jobs:
       - name: Restore nuget packages
         run: |
           dotnet restore App/App.csproj
+          dotnet restore AppTest/AppTest.csproj
 
-      - name: Build Library
+      - name: Build App and Test
         run: |
-          dotnet build App/App.csproj -c Release
+          dotnet build App/App.csproj -f net9.0-maccatalyst -c Release
+          dotnet test AppTest/AppTest.csproj
 
 
