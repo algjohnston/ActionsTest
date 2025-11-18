@@ -53,7 +53,7 @@ jobs:
 
       - name: Build App and Test
         run: |
-          dotnet build App/App.csproj -f net9.0-maccatalyst -c Release
+          dotnet build App/App.csproj -f net9.0-android -c Release
           dotnet test AppTest/AppTest.csproj
 
 

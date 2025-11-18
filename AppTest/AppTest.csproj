@@ -2,9 +2,6 @@
 
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
-    <UseMaui>false</UseMaui>
-    <EnableDefaultMauiItems>false</EnableDefaultMauiItems>
-    <IncludeMauiTargets>false</IncludeMauiTargets>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
