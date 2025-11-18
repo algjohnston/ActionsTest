@@ -33,10 +33,12 @@ jobs:
 
       - uses: actions/cache@v3
         with:
-          path: ~/.dotnet/workload-manifests
-          key: ${{ runner.os }}-maui-${{ hashFiles('**/*.xml') }}
+          path: |
+            ~/.dotnet/sdk-manifests
+            ~/.dotnet/packs
+          key: ${{ runner.os }}-maui-${{ hashFiles('**/*.csproj') }}
           restore-keys: |
-           ${{ runner.os }}-maui
+            ${{ runner.os }}-maui
       
       - name: Set VERSION variable from tag
         id: versionstep
