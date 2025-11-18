@@ -29,7 +29,7 @@ jobs:
       - uses: actions/cache@v3
         with:
           path: ~/.dotnet/workload-manifests
-          key: ${{ runner.os }}-${{ hashFiles('**/*.xml') }}
+          key: ${{ runner.os }}-maui-${{ hashFiles('**/*.xml') }}
           restore-keys: |
            ${{ runner.os }}-maui
 
