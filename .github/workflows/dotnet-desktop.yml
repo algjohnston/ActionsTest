@@ -26,17 +26,17 @@ jobs:
           restore-keys: |
            ${{ runner.os }}-nuget
 
+      - name: Install .NET MAUI
+        shell: bash
+        run: |
+          dotnet workload install maui
+
       - uses: actions/cache@v3
         with:
           path: ~/.dotnet/workload-manifests
           key: ${{ runner.os }}-maui-${{ hashFiles('**/*.xml') }}
           restore-keys: |
            ${{ runner.os }}-maui
-
-      - name: Install .NET MAUI
-        shell: bash
-        run: |
-          dotnet workload install maui
       
       - name: Set VERSION variable from tag
         id: versionstep
