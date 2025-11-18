@@ -18,8 +18,7 @@ jobs:
       - uses: actions/setup-dotnet@v5
         with:
             dotnet-version: ${{env.DOTNETVERSION}}
-            cache: true
-
+            
       - uses: actions/cache@v3
         with:
           path: ~/.nuget/packages
