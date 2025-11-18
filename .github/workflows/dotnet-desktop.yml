@@ -11,8 +11,6 @@ env:
 jobs:
   buildLibrary:
     runs-on: macOS-26
-    outputs:
-      output1: ${{ steps.versionstep.outputs.versionnumber }}
     
     steps:
       - uses: actions/checkout@v5
@@ -20,20 +18,21 @@ jobs:
       - uses: actions/setup-dotnet@v5
         with:
             dotnet-version: ${{env.DOTNETVERSION}}
+            cache: true
 
       - uses: actions/cache@v3
         with:
           path: ~/.nuget/packages
-          key: nuget-${{ runner.os }}-${{ hashFiles('**/App/*.csproj') }}
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
           restore-keys: |
-            nuget-${{ runner.os }}-
+           ${{ runner.os }}-nuget
 
       - uses: actions/cache@v3
         with:
           path: ~/.dotnet/workload-manifests
-          key: maui-${{ runner.os }}-${{ hashFiles('**/*.xml') }}
+          key: ${{ runner.os }}-${{ hashFiles('**/*.xml') }}
           restore-keys: |
-            maui-${{ runner.os }}-
+           ${{ runner.os }}-maui
 
       - name: Install .NET MAUI
         shell: bash
