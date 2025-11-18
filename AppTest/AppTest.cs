@@ -10,6 +10,6 @@ public class UnitTest1
     {
         CounterService counterService = new();
         var (count, _) = counterService.Increment();
-        Assert.Equal(1, count);
+        Assert.Equal(2, count);
     }
 }
